@@ -2,18 +2,7 @@ spring:
   data:
     rest:
       detection-strategy: "annotated" # Stops spring-data-rest auto-config of entities controllers
-  datasource:
-    url: jdbc:h2:mem:mydb # in memory
-    # url: jdbc:h2:file:/data/demo;DB_CLOSE_DELAY = -1 # file based
-    username: sa
-    password: password
-    driverClassName: org.h2.Driver
-  jpa:
-    # database-platform: org.hibernate.dialect.H2Dialect # Not requried
-    defer-datasource-initialization: false # true, false if we use flyway or liquibase or schema.sql
-  h2:
-    console:
-      enabled: false # override to true in local/dev env if desired
+  # datasource: # Use db profiles for configuration i.e. h2, mysql, etc.
 
 server:
   compression:

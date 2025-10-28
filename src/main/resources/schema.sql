@@ -1,9 +1,16 @@
--- CREATE ALIAS IF NOT EXISTS FTL_INIT FOR "org.h2.fulltext.FullTextLucene.init";
--- CALL FTL_INIT();
-CREATE ALIAS IF NOT EXISTS FT_INIT FOR "org.h2.fulltext.FullText.init";
-CALL FT_INIT();
-
-CREATE TABLE VIDEO(ID INT PRIMARY KEY, URL VARCHAR, POSITION VARCHAR, FAMILY VARCHAR, TAGS VARCHAR, NOTES VARCHAR, RELATED VARCHAR);
-
--- CALL FTL_CREATE_INDEX('PUBLIC', 'VIDEO', NULL);
-CALL FT_CREATE_INDEX('PUBLIC', 'VIDEO', NULL);
+-- Create table & enable full-text-indexing for MySQL
+CREATE TABLE IF NOT EXISTS video (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    family TEXT DEFAULT NULL,
+    notes TEXT DEFAULT NULL,
+    position VARCHAR(255) DEFAULT NULL,
+    related VARCHAR(255) DEFAULT NULL,
+    tags TEXT DEFAULT NULL,
+    url VARCHAR(255),
+    FULLTEXT INDEX idx_wrasslin_fulltext_family(family),
+    FULLTEXT INDEX idx_wrasslin_fulltext_notes(notes),
+    FULLTEXT INDEX idx_wrasslin_fulltext_position(position),
+    FULLTEXT INDEX idx_wrasslin_fulltext_related(related),
+    FULLTEXT INDEX idx_wrasslin_fulltext_tags(tags),
+    FULLTEXT INDEX idx_wrasslin_fulltext(family, notes, position, tags)
+) ENGINE=InnoDB;

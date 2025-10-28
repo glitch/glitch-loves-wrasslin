@@ -1,0 +1,22 @@
+services:
+  mysql:
+    # https://github.com/docker-library/docs/tree/master/mysql
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql-root
+      # The folling 3 vars will make a user with superuser privs on the specified db
+      MYSQL_DATABASE: wrasslin-clips
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD_FILE: /run/secrets/mysql-user
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./mysql-root-docker-secret:/run/secrets/mysql-root:ro # make a local mysql-root-docker-secret for password setup
+      - ./mysql-user-docker-secret:/run/secrets/mysql-user:ro # make a local mysql-user-docker-secret for password setup
+volumes:
+  mysql-data:
+
+# to connect using the mysql container as a client you can run the following
+# and provide the password from your docker secret file etc.
+# docker run -it --network glitch-loves-wrasslin_default --rm mysql:8.0 mysql -hmysql -upjkyle -p

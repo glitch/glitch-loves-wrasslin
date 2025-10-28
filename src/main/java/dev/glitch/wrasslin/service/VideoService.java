@@ -38,7 +38,27 @@ public class VideoService {
         return repo.searchByFullText(text);
     }
 
+    public List<VideoModel> searchTagsByFullText(String text) {
+        return repo.searchTagsByFullText(text);
+    }
+
+    public List<VideoModel> searchNotesByFullText(String text) {
+        return repo.searchNotesByFullText(text);
+    }
+
+    public List<VideoModel> searchPositionByFullText(String text) {
+        return repo.searchPositionByFullText(text);
+    }
+
+    public List<VideoModel> searchRelatedByFullText(String text) {
+        return repo.searchRelatedByFullText(text);
+    }
+
     public void reindex() {
         repo.reindex();
+    }
+
+    public List<VideoModel> dumpDB() {
+        return repo.findAll();
     }
 }

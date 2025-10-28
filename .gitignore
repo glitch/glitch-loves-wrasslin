@@ -1,3 +1,9 @@
+# Custom ignore files
+mysql-data/
+mysql-root-docker-secret
+mysql-user-docker-secret
+.env.local
+
 # Compiled class file
 *.class
 .classpath
