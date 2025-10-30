@@ -22,5 +22,9 @@ public interface VideoRepository extends JpaRepository<VideoModel, Long> {
 
     List<VideoModel> searchRelatedByFullText(@Param("searchTerm") String searchTerm);
 
+    VideoModel findDistinctByUrl(String url);
+
+    List<String> findDistinctUrl();
+
     void reindex();
 }

@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS video (
     related VARCHAR(255) DEFAULT NULL,
     tags TEXT DEFAULT NULL,
     url VARCHAR(255),
+    INDEX idx_wrasslin_url(url),
     FULLTEXT INDEX idx_wrasslin_fulltext_family(family),
     FULLTEXT INDEX idx_wrasslin_fulltext_notes(notes),
     FULLTEXT INDEX idx_wrasslin_fulltext_position(position),

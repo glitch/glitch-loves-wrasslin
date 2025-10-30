@@ -32,6 +32,9 @@ public interface VideoRepositoryMySQL extends VideoRepository {
     @Query(value = "SELECT v.* FROM video v WHERE MATCH (v.related) AGAINST (:searchTerm IN NATURAL LANGUAGE MODE)", nativeQuery = true)
     List<VideoModel> searchRelatedByFullText(@Param("searchTerm") String searchTerm);
 
+    @Query(value = "SELECT DISTINCT v.url FROM video v")
+    List<String> findDistinctUrl();
+
     @Query(value = "OPTIMIZE TABLE VIDEO;", nativeQuery = true)
     void reindex();
 }

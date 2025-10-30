@@ -25,13 +25,18 @@ public class VideoService {
         return repo.findAll(page);
     }
 
-    public VideoModel saveVideoClip(VideoModel clip) {
-        return repo.save(clip.withId(null)); // zero out id since it's auto-generated
+    public VideoModel saveRecord(VideoModel record) {
+        return repo.save(record.withId(null)); // zero out id since it's auto-generated
     }
 
-    public List<VideoModel> saveVideoClips(List<VideoModel> clips) {
-        List<VideoModel> cleaned = clips.stream().map(c -> c.withId(null)).toList();
+    public List<VideoModel> saveRecords(List<VideoModel> records) {
+        List<VideoModel> cleaned = records.stream().map(c -> c.withId(null)).toList();
         return repo.saveAll(cleaned);
+    }
+
+    public List<VideoModel> saveRecordIfUniqueUrl(List<VideoModel> records) {
+        List<VideoModel> unique = records.stream().filter(c -> null == repo.findDistinctByUrl(c.getUrl())).map(c -> c.withId(null)).toList();
+        return repo.saveAll(unique);
     }
 
     public List<VideoModel> searchByFullText(String text) {
@@ -52,6 +57,30 @@ public class VideoService {
 
     public List<VideoModel> searchRelatedByFullText(String text) {
         return repo.searchRelatedByFullText(text);
+    }
+
+    public VideoModel findByUrl(String url) {
+        return repo.findDistinctByUrl(url);
+    }
+
+    public List<String> findDistinctUrls() {
+        return repo.findDistinctUrl();
+    }
+
+    public VideoModel updateRecord(VideoModel record) {
+        return repo.save(record);
+    }
+
+    public void deleteRecord(VideoModel record) {
+        repo.delete(record);
+    }
+
+    public void deleteRecord(Long id) {
+        repo.deleteById(id);
+    }
+
+    public void deleteRecords(List<VideoModel> records) {
+        repo.deleteAll(records);
     }
 
     public void reindex() {

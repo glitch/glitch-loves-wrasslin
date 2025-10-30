@@ -1,0 +1,32 @@
+spring:
+  config:
+    import: optional:configtree:/run/secrets/
+  datasource: # We are expecting to use a docker container mysql instance
+    platform: mysql
+    initialization-mode: always
+    url: ${MYSQL_JDBC}
+    username: ${mysql-user-docker-username}
+    password: ${mysql-user-docker-secret}
+    driverClassName: com.mysql.cj.jdbc.Driver
+  jpa:
+    defer-datasource-initialization: true # true, false if we use flyway or liquibase or schema.sql
+    show-sql: true
+    hibernate:
+      ddl-auto: none # or create, create-drop, validate, none, update
+    # properties:
+    #   hibernate:
+    #     dialect: org.hibernate.dialect.MySQL8Dialect # It should auto-detect so this might be unnecessary
+  sql:
+    init:
+      mode: always
+
+# spring-boot server config
+server:
+  port: 8443
+  ssl:
+    enabled: true
+    key-store: ${KEYSTORE_FILE}
+    key-store-password: ${keystore-password-secret}
+    key-store-type: PKCS12
+    key-alias: springboot
+    key-password: ${keystore-password-secret}

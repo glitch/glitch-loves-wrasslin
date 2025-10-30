@@ -3,20 +3,68 @@ services:
     # https://github.com/docker-library/docs/tree/master/mysql
     image: mysql:8.0
     environment:
-      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql-root
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql-root-password
       # The folling 3 vars will make a user with superuser privs on the specified db
       MYSQL_DATABASE: wrasslin-clips
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD_FILE: /run/secrets/mysql-user
-    ports:
-      - "3306:3306"
+      MYSQL_USER_FILE: /run/secrets/mysql-user-name
+      MYSQL_PASSWORD_FILE: /run/secrets/mysql-user-password
+    secrets:
+      - mysql-root-docker-secret
+      - mysql-user-docker-secret
+      - mysql-user-docker-username
+    expose:
+      - "3306"
+    networks:
+      - wrasslin-network
     volumes:
       - mysql-data:/var/lib/mysql
-      - ./mysql-root-docker-secret:/run/secrets/mysql-root:ro # make a local mysql-root-docker-secret for password setup
-      - ./mysql-user-docker-secret:/run/secrets/mysql-user:ro # make a local mysql-user-docker-secret for password setup
+      - ./mysql-root-docker-secret:/run/secrets/mysql-root-password:ro # make a local mysql-root-docker-secret for password setup
+      - ./mysql-user-docker-secret:/run/secrets/mysql-user-password:ro # make a local mysql-user-docker-secret for password setup
+      - ./mysql-user-docker-username:/run/secrets/mysql-user-name:ro # make a local mysql-user-docker-secret for password setup
+      - ./my.cnf:/etc/my.cnf
+    deploy:
+      resources:
+        limits:
+          memory: 300m
+
+  wrasslin-app:
+    image: wrasslin-app:latest
+    depends_on:
+      - mysql
+    ports:
+      - "8443:8443"
+    networks:
+      - wrasslin-network
+    secrets:
+      - keystore-password-secret
+      - mysql-user-docker-secret
+      - mysql-user-docker-username
+    volumes:
+      - ./wrasslin.p12:/app/wrasslin.p12
+    environment:
+      - KEYSTORE_FILE=${KEYSTORE_FILE}
+      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE}
+      - MYSQL_JDBC=${MYSQL_JDBC}
+    deploy:
+      resources:
+        limits:
+          memory: 256m
+
 volumes:
   mysql-data:
 
+secrets:
+  mysql-root-docker-secret:
+    file: ./mysql-root-docker-secret
+  mysql-user-docker-secret:
+    file: ./mysql-user-docker-secret
+  mysql-user-docker-username:
+    file: ./mysql-user-docker-username
+  keystore-password-secret:
+    file: ./keystore-password-secret
+
+networks:
+  wrasslin-network:
 # to connect using the mysql container as a client you can run the following
 # and provide the password from your docker secret file etc.
-# docker run -it --network glitch-loves-wrasslin_default --rm mysql:8.0 mysql -hmysql -upjkyle -p
+# docker run -it --network glitch-loves-wrasslin-docker_wrasslin-network --rm mysql:8.0 mysql -hmysql -upjkyle -p

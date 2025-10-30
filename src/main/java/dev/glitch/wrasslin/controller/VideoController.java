@@ -10,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,16 +43,37 @@ public class VideoController {
         return null;
     }
 
-    @PostMapping("/loadone")
-    @ResponseStatus(HttpStatus.CREATED)
-    public VideoModel createVideo(@RequestBody VideoModel video) {
-        return service.saveVideoClip(video);
-    }
-
     @PostMapping("/load")
     @ResponseStatus(HttpStatus.CREATED)
-    public List<VideoModel> createVideos(@RequestBody List<VideoModel> videos) {
-        return service.saveVideoClips(videos);
+    public List<VideoModel> saveRecords(@RequestBody List<VideoModel> records) {
+        return service.saveRecords(records);
+    }
+
+    @PostMapping("/loadone")
+    @ResponseStatus(HttpStatus.CREATED)
+    public VideoModel saveRecord(@RequestBody VideoModel record) {
+        return service.saveRecord(record);
+    }
+
+    @PostMapping("/loadunique")
+    @ResponseStatus(HttpStatus.CREATED)
+    public List<VideoModel> saveUniqueRecords(@RequestBody List<VideoModel> records) {
+        return service.saveRecordIfUniqueUrl(records);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public void deleteById(@PathVariable("id") Long id) {
+        service.deleteRecord(id);
+    }
+
+    @DeleteMapping(value = "/delete")
+    public void deleteById(@RequestBody List<VideoModel> videos) {
+        service.deleteRecords(videos);
+    }
+
+    @PostMapping(value = "/update")
+    public VideoModel updateRecord(@RequestBody VideoModel record) {
+        return service.updateRecord(record);
     }
 
     @GetMapping("/findAll")
@@ -82,6 +104,16 @@ public class VideoController {
     @GetMapping("/searchRelated")
     public List<VideoModel> searchRelatedTags(@RequestParam("text") String text) {
         return service.searchRelatedByFullText(text);
+    }
+
+    @GetMapping("/url")
+    public VideoModel findByUrl(@RequestParam("url") String url) {
+        return service.findByUrl(url);
+    }
+
+    @GetMapping("/urls")
+    public List<String> findDistinctUrls() {
+        return service.findDistinctUrls();
     }
 
     /**
