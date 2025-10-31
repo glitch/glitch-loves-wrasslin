@@ -2,7 +2,6 @@ package dev.glitch.wrasslin.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,12 +18,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private static final String[] SWAGGER_PATHS = {
-            "/v3/api-docs/**",
-            "/v3/api-docs.yaml",
-            "/swagger-ui/**",
-            "/swagger-ui.html"
-    };
+    // private static final String[] SWAGGER_PATHS = {
+    //         "/v3/api-docs/**",
+    //         "/v3/api-docs.yaml",
+    //         "/swagger-ui/**",
+    //         "/swagger-ui.html"
+    // };
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -44,13 +43,6 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-    // @Bean
-    // public DaoAuthenticationProvider authenticationProvider(AdminUserDetailsService adminUserDetailsService) {
-    //     DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(adminUserDetailsService);
-    //     authProvider.setPasswordEncoder(passwordEncoder());
-    //     return authProvider;
-    // }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
