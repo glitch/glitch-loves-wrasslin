@@ -31,7 +31,6 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            // .userDetailsService(null)
             .authorizeHttpRequests(authorize -> authorize
                     .requestMatchers("/admin/**").hasRole("ADMIN")
                     .anyRequest().permitAll())
@@ -46,12 +45,12 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider(AdminUserDetailsService adminUserDetailsService) {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(adminUserDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return authProvider;
-    }
+    // @Bean
+    // public DaoAuthenticationProvider authenticationProvider(AdminUserDetailsService adminUserDetailsService) {
+    //     DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(adminUserDetailsService);
+    //     authProvider.setPasswordEncoder(passwordEncoder());
+    //     return authProvider;
+    // }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {

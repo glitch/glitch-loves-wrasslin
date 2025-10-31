@@ -35,6 +35,13 @@ public interface VideoRepositoryMySQL extends VideoRepository {
     @Query(value = "SELECT DISTINCT v.url FROM video v")
     List<String> findDistinctUrl();
 
-    @Query(value = "OPTIMIZE TABLE video;", nativeQuery = true)
+    @Query(value = "SELECT DISTINCT v.family FROM video v")
+    List<String> findDistinctFamily();
+
+    @Query(value = "SELECT DISTINCT v.position FROM video v")
+    List<String> findDistinctPosition();
+
+    // Not supported, InnoDB should automatically be updating indices
+    @Query(value = "SELECT 1;", nativeQuery = true)
     void reindex();
 }

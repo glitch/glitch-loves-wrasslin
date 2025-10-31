@@ -27,7 +27,15 @@ public interface VideoRepositoryH2 extends VideoRepository {
 
     List<VideoModel> searchRelatedByFullText(@Param("searchTerm") String searchTerm);
 
+    @Query(value = "SELECT DISTINCT v.url FROM video v")
+    List<String> findDistinctUrl();
+
+    @Query(value = "SELECT DISTINCT v.family FROM video v")
+    List<String> findDistinctFamily();
+
+    @Query(value = "SELECT DISTINCT v.position FROM video v")
+    List<String> findDistinctPosition();
+
     @Query(value = "CALL FT_REINDEX()", nativeQuery = true)
     void reindex();
-
 }
