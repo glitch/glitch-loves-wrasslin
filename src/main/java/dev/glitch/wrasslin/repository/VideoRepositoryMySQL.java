@@ -35,6 +35,6 @@ public interface VideoRepositoryMySQL extends VideoRepository {
     @Query(value = "SELECT DISTINCT v.url FROM video v")
     List<String> findDistinctUrl();
 
-    @Query(value = "OPTIMIZE TABLE VIDEO;", nativeQuery = true)
+    @Query(value = "OPTIMIZE TABLE video;", nativeQuery = true)
     void reindex();
 }

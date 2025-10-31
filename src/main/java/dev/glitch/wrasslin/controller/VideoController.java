@@ -70,4 +70,14 @@ public class VideoController {
     public List<String> findDistinctUrls() {
         return service.findDistinctUrls();
     }
+
+    @GetMapping("/families")
+    public List<String> findDistinctFamilies() {
+        return service.findDistinctFamily();
+    }
+
+    @GetMapping("/positions")
+    public List<String> findDistinctPositions() {
+        return service.findDistinctPositions();
+    }
 }

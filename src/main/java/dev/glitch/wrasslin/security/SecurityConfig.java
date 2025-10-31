@@ -3,12 +3,14 @@ package dev.glitch.wrasslin.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,13 +29,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(c -> c.disable())
-            .cors(Customizer.withDefaults())
+            .csrf(csrf -> csrf.disable())
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+            // .userDetailsService(null)
             .authorizeHttpRequests(authorize -> authorize
-                    .requestMatchers("/admin/videos/**").hasRole("ADMIN")
-                    .requestMatchers(SWAGGER_PATHS).permitAll()
-                    .requestMatchers("/videos/**").permitAll()
-                    .anyRequest().authenticated())
+                    .requestMatchers("/admin/**").hasRole("ADMIN")
+                    .anyRequest().permitAll())
             .formLogin(form -> form.permitAll().defaultSuccessUrl("/swagger-ui.html", true))
             .logout(logout -> logout.permitAll());
 
@@ -46,9 +47,21 @@ public class SecurityConfig {
     }
 
     @Bean
-        public DaoAuthenticationProvider authenticationProvider(AdminUserDetailsService adminUserDetailsService) {
-            DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(adminUserDetailsService);
-            authProvider.setPasswordEncoder(passwordEncoder());
-            return authProvider;
-        }
+    public DaoAuthenticationProvider authenticationProvider(AdminUserDetailsService adminUserDetailsService) {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(adminUserDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder());
+        return authProvider;
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.addAllowedOriginPattern("*");
+        config.addAllowedMethod("*");
+        config.addAllowedHeader("*");
+        config.setAllowCredentials(true);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config); // Apply to all paths
+        return source;
+    }
 }

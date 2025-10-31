@@ -26,5 +26,9 @@ public interface VideoRepository extends JpaRepository<VideoModel, Long> {
 
     List<String> findDistinctUrl();
 
+    List<String> findDistinctPosition();
+
+    List<String> findDistinctFamily();
+
     void reindex();
 }

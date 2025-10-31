@@ -67,6 +67,14 @@ public class VideoService {
         return repo.findDistinctUrl();
     }
 
+    public List<String> findDistinctFamily() {
+        return repo.findDistinctFamily();
+    }
+
+    public List<String> findDistinctPositions() {
+        return repo.findDistinctPosition();
+    }
+
     public VideoModel updateRecord(VideoModel record) {
         return repo.save(record);
     }
