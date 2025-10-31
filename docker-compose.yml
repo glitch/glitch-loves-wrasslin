@@ -36,6 +36,7 @@ services:
     networks:
       - wrasslin-network
     secrets:
+      - admin-password-secret
       - keystore-password-secret
       - mysql-user-docker-secret
       - mysql-user-docker-username
@@ -62,6 +63,8 @@ secrets:
     file: ./mysql-user-docker-username
   keystore-password-secret:
     file: ./keystore-password-secret
+  admin-password-secret:
+    file: ./admin-password-secret
 
 networks:
   wrasslin-network:

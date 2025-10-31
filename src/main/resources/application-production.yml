@@ -30,3 +30,6 @@ server:
     key-store-type: PKCS12
     key-alias: springboot
     key-password: ${keystore-password-secret}
+
+admin:
+  password: ${admin-password-secret}
