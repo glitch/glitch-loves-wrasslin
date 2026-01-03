@@ -54,6 +54,19 @@ You can fire it up via:
 
 The src/main/resources/schema.sql should create the `video` table for you in MySQL on first run
 
+You can always connect to your running mysql container, connect to mysql as root, and run the table creation scripts manually. e.g.
+
+```bash
+docker exec -it wrasslin-mysql-1 sh
+
+sh-5.1# mysql -h 127.0.0.1 -P 3306 -u root -p
+<supply root password when prompted>
+
+mysql> use wrasslin-clips;
+mysql> show tables;
+mysql> ... run create table commands
+```
+
 ### Running and data
 You can use the sample data to prime the DB.
 
@@ -109,3 +122,8 @@ A _comprehensive/combined_ full-text-index is also created for position+family+t
   }
 ]
 ```
+
+## Creating a container for deployment
+1. Build the code `mvn clean package`
+2. OPTIONAL: depending on your setup you may need to copy the jar file somewhere
+3. Build docker container `docker build -t wrasslin-app .`

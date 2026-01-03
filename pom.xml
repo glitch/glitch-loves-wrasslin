@@ -8,13 +8,13 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.7</version> <!-- Use your desired Spring Boot version -->
+        <version>3.5.8</version> <!-- Use your desired Spring Boot version -->
         <relativePath /> <!-- lookup parent from repository -->
     </parent>
 
     <groupId>dev.glitch.exploratory</groupId>
     <artifactId>glitch-loves-wrasslin</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
 
     <name>lookup-o-matic</name>
     <url>https://github.com/glitch/glitch-loves-wrasslin</url>
