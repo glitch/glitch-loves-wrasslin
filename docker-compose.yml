@@ -43,7 +43,7 @@ services:
     volumes:
       - ./wrasslin.p12:/app/wrasslin.p12
     environment:
-      - KEYSTORE_FILE=${KEYSTORE_FILE}
+      - KEYSTORE_FILE=/app/wrasslin.p12
       - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE}
       - MYSQL_JDBC=${MYSQL_JDBC}
     deploy:
@@ -70,4 +70,4 @@ networks:
   wrasslin-network:
 # to connect using the mysql container as a client you can run the following
 # and provide the password from your docker secret file etc.
-# docker run -it --network glitch-loves-wrasslin-docker_wrasslin-network --rm mysql:8.0 mysql -hmysql -upjkyle -p
+# docker run -it --network glitch-loves-wrasslin-docker_wrasslin-network --rm mysql:8.0 mysql -hmysql -u<username> -p

@@ -3,7 +3,8 @@ mysql-data/
 mysql-root-docker-secret
 mysql-user-docker-secret
 mysql-user-docker-username
-.env.local
+*.env.local
+*.env
 keystore-password-secret
 admin-password-secret
 *.p12

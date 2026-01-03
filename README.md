@@ -4,7 +4,7 @@ Wrestling video clip database project
 ## Requirements
 - mvn
 - java 25 (Recommended: use https://sdkman.io to install both java and maven)
-- docker (for mysql, although an H2 impl has bee provided, you'd need to activate its profile)
+- docker (for mysql)
 
 ## Quickstart
 ### VSCode Launch
@@ -23,12 +23,12 @@ Using VSCode you can build and launch the app using a `.vscode/launch.json` file
       "vmArgs": [
         "-Dspring.profiles.active=local,swagger,mysql"
       ],
-      "envFile": "${workspaceFolder}/env.local"
+      "envFile": "${workspaceFolder}/.env.local"
     }
   ]
 }
 ```
-### env.local file for env vars
+### .env.local file for env vars
 You will need to set a few env vars in either an env.local or a .env file (have it match your vscode launch file).  
 It should contain:
 - MYSQL_USER="anyone-you-want"
@@ -47,24 +47,28 @@ A docker-compose.yml file has been included for MySQL.  You need to create a few
 - `mysql-root-docker-secret` -> file holding the root mysql user password
 - `mysql-user-docker-secret` -> file holding the user's password
 - `.env-local` or `.env` file holding the `MYSQL_USER=anyone-you-want` env variable
-  - `.env` is the default arg for docker, but I prefer --env-file env.local for better visibility ;)
+  - `.env` is the default arg for docker, but I prefer --env-file env.local for local clarity ;)
 
 You can fire it up via:  
-`docker compose -f docker-compose.yml --env-file env.local up`
+`docker compose -f docker-compose.yml --env-file .env.local up mysql`
 
-The src/main/resources/schema.sql should create the `video` table for you in MySQL on first run
+The src/main/resources/schema.sql should create the `video` and `match-playlists` tables for you in MySQL on first run
 
 You can always connect to your running mysql container, connect to mysql as root, and run the table creation scripts manually. e.g.
 
 ```bash
+# After your mysql container has been started and the database is running
+# Connect to the container
 docker exec -it wrasslin-mysql-1 sh
 
+# From inside the container, connect to mysql
 sh-5.1# mysql -h 127.0.0.1 -P 3306 -u root -p
 <supply root password when prompted>
 
+# MySQL commands
 mysql> use wrasslin-clips;
 mysql> show tables;
-mysql> ... run create table commands
+mysql> ... run create table commands from schema.sql file
 ```
 
 ### Running and data
@@ -124,6 +128,13 @@ A _comprehensive/combined_ full-text-index is also created for position+family+t
 ```
 
 ## Creating a container for deployment
-1. Build the code `mvn clean package`
+1. Build the code `mvn clean package` (creates jar with all dependencies)
 2. OPTIONAL: depending on your setup you may need to copy the jar file somewhere
 3. Build docker container `docker build -t wrasslin-app .`
+
+### Running with docker-compose
+You can use the docker-compose file as a starting point to start both containers, the database and the web-app.
+
+Note: you will need to create your own p12 file or java keystore with your self-signed or provided certificate for https/ssl security.
+There are plenty of guides out there for how to create a self signed cert etc. so we'll leave that as an exercise for the user.
+The cert is mounted into the container as `wrasslin.p12` but it should be easy enough to mount as a docker secret or other file etc.
