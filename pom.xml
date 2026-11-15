@@ -8,12 +8,12 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.8</version>
+        <version>4.1.2</version>
     </parent>
 
     <groupId>dev.glitch.exploratory</groupId>
     <artifactId>glitch-loves-wrasslin</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.3-SNAPSHOT</version>
 
     <name>lookup-o-matic</name>
     <url>https://github.com/glitch/glitch-loves-wrasslin</url>
@@ -25,7 +25,7 @@
         <!-- software versions -->
         <h2.version>2.4.240</h2.version>
         <mysql.connector.version>9.4.0</mysql.connector.version>
-        <springdoc.version>2.8.13</springdoc.version>
+        <springdoc.version>3.2.0</springdoc.version>
 
         <!-- maven plugin versions -->
         <maven.clean.plugin.version>3.5.0</maven.clean.plugin.version>

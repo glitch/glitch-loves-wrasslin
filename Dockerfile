@@ -1,6 +1,8 @@
-FROM eclipse-temurin:25_36-jre-alpine-3.22
+# FROM eclipse-temurin:25-jre-alpine-3.24
+# RUN apk update && apk upgrade
 
-RUN apk update && apk upgrade
+# FROM bellsoft/hardened-liberica-runtime-container:jre-25-glibc as builder
+FROM bellsoft/hardened-liberica-runtime-container:jre-25-nonroot-glibc
 
 WORKDIR /app
 

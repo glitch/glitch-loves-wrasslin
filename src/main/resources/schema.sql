@@ -25,3 +25,14 @@ CREATE TABLE IF NOT EXISTS `match-playlist` (
     url VARCHAR(255),
     year INT DEFAULT 2026
 ) ENGINE=InnoDB;
+
+-- Create attendance table for MySQL
+CREATE TABLE IF NOT EXISTS `attendance` (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    email VARCHAR(255) DEFAULT NULL,
+    event_date DATE NOT NULL DEFAULT (CURRENT_DATE),
+    present BOOLEAN DEFAULT TRUE,
+    excused BOOLEAN DEFAULT FALSE,
+    INDEX idx_email(email),
+    INDEX idx_event_date(event_date)
+) ENGINE=InnoDB;

@@ -13,9 +13,9 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: none # or create, create-drop, validate, none, update
-    # properties:
-    #   hibernate:
-    #     dialect: org.hibernate.dialect.MySQL8Dialect # It should auto-detect so this might be unnecessary
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect # It should auto-detect so this might be unnecessary
   sql:
     init:
-      mode: always
+      mode: never

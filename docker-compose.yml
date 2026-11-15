@@ -14,6 +14,8 @@ services:
       - mysql-user-docker-username
     expose:
       - "3306"
+    # ports:
+    #   - "3306:3306"
     networks:
       - wrasslin-network
     volumes:
@@ -37,6 +39,7 @@ services:
       - wrasslin-network
     secrets:
       - admin-password-secret
+      - attendance-secret
       - keystore-password-secret
       - mysql-user-docker-secret
       - mysql-user-docker-username
@@ -65,6 +68,8 @@ secrets:
     file: ./keystore-password-secret
   admin-password-secret:
     file: ./admin-password-secret
+  attendance-secret:
+    file: ./attendance-secret
 
 networks:
   wrasslin-network:

@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import dev.glitch.wrasslin.model.MatchPlaylistModel;
 import dev.glitch.wrasslin.service.MatchPlaylistService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 @PreAuthorize("hasRole('ADMIN')")
 @RequiredArgsConstructor
 public class MatchPlaylistAdminController {
-    private final ObjectMapper mapper = new ObjectMapper();
     private final MatchPlaylistService service;
 
     @PostMapping("/load")

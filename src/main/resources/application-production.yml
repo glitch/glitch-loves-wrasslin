@@ -18,7 +18,7 @@ spring:
     #     dialect: org.hibernate.dialect.MySQL8Dialect # It should auto-detect so this might be unnecessary
   sql:
     init:
-      mode: always
+      mode: never
 
 # spring-boot server config
 server:
@@ -33,3 +33,7 @@ server:
 
 admin:
   password: ${admin-password-secret}
+
+wrasslin:
+  attendance:
+    code: ${attendance-secret}

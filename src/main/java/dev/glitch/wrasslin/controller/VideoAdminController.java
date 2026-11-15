@@ -17,18 +17,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import dev.glitch.wrasslin.model.VideoModel;
 import dev.glitch.wrasslin.service.VideoService;
 import lombok.RequiredArgsConstructor;
+import tools.jackson.databind.json.JsonMapper;
 
 @RestController
 @RequestMapping("/admin/videos")
 @PreAuthorize("hasRole('ADMIN')")
 @RequiredArgsConstructor
 public class VideoAdminController {
-    private final ObjectMapper mapper = new ObjectMapper();
+    private final JsonMapper mapper = JsonMapper.shared();
     private final VideoService service;
 
     @PostMapping("/load")

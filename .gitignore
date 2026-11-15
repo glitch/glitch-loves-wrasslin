@@ -7,6 +7,7 @@ mysql-user-docker-username
 *.env
 keystore-password-secret
 admin-password-secret
+attendance-secret
 *.p12
 
 # Compiled class file
