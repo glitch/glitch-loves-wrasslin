@@ -18,8 +18,8 @@ CREATE TABLE IF NOT EXISTS video (
     FULLTEXT INDEX idx_wrasslin_fulltext(family, notes, position, tags)
 ) ENGINE=InnoDB;
 
--- Create match-playlist table for MySQL
-CREATE TABLE IF NOT EXISTS `match-playlist` (
+-- Create match_playlist table for MySQL
+CREATE TABLE IF NOT EXISTS `match_playlist` (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) DEFAULT NULL,
     url VARCHAR(255),

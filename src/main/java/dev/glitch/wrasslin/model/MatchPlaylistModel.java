@@ -13,7 +13,7 @@ import lombok.With;
 @NoArgsConstructor
 @AllArgsConstructor
 @With
-@Entity(name = "match-playlist")
+@Entity(name = "match_playlist")
 public class MatchPlaylistModel {
 
     @Id
