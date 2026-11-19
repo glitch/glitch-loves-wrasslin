@@ -49,6 +49,7 @@ services:
       - KEYSTORE_FILE=/app/wrasslin.p12
       - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE}
       - MYSQL_JDBC=${MYSQL_JDBC}
+    entrypoint: ["java", "-XX:-UseBASE64Intrinsics", "-jar", "/app/wrasslin-springboot.jar"]
     deploy:
       resources:
         limits:
